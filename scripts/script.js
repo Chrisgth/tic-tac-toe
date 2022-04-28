@@ -1,3 +1,12 @@
+// create player factory
+const playerFactory = (name, sign) => {
+    playerName = name;
+    playerSign = sign;
+    return {
+        playerName,
+        playerSign,
+    }
+}
 // create a module that contains the gameboard which is stored in an array
 const gameBoard = (() => {
     let gameBoardArray = ['', '', '', '', '', '', '', '', '']

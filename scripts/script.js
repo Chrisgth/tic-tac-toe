@@ -22,3 +22,21 @@ const render = (() => {
     }
 })();
 render.display();
+// build the functions that allow players to add marks
+// to a specific spot on the board
+const game = (() => {
+    const cells = document.querySelectorAll('.cell')
+    const addListeners = () => {
+        for (i=0; i<cells.length; i++){
+            let currentCell = cells[i]
+            cells[i].addEventListener('click', () =>{
+                currentCell.textContent = 'x'
+            })
+        }
+    }
+    return {
+        addListeners,
+        cells,
+    }
+})();
+game.addListeners();

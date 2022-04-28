@@ -1,0 +1,11 @@
+.board { 
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+    border: 1px solid black;
+    max-width: 200px;
+}
+.cell {
+    text-align: center;
+    border: 1px solid black;
+    min-height: 1rem;
+}

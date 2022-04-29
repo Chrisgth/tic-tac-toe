@@ -39,25 +39,47 @@ const game = (() => {
     const playerTwo = playerFactory('Bill', 'o')
     let currentPlayer = playerOne
     const cells = document.querySelectorAll('.cell')
+    const cellsArray = Array.from(cells)
     const addListeners = () => {
         for (i=0; i<cells.length; i++){
-            let currentCell = cells[i]
+            let currentCell = cellsArray[i]
             cells[i].addEventListener('click', () => {
                 if (currentCell.textContent != ''){
                     return;
                 } else if (currentPlayer.playerSign === 'x') {
                     currentCell.textContent = 'x'
+                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'x'
                     currentPlayer = playerTwo
                 } else {
                     currentCell.textContent = 'o'
+                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'o'
                     currentPlayer = playerOne
                 }
             })
         }
     }
-    addListeners();
+// define win conditions
+    const winConditions = [
+        [0, 1, 2],
+        [0, 4, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [2, 4, 6],
+        [3, 4, 5],
+        [6, 7, 8]
+    ]
+// create function that checks if game has been won
+    const checkWin = () => {
+
+    }
+
+    addListeners()
     return {
         cells,
+        cellsArray,
         currentPlayer,
+        checkGameEnd,
+        winConditions,
     }
 })();

@@ -50,10 +50,12 @@ const game = (() => {
                     currentCell.textContent = 'x'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'x'
                     currentPlayer = playerTwo
+                    game.checkWin()
                 } else {
                     currentCell.textContent = 'o'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'o'
                     currentPlayer = playerOne
+                    game.checkWin()
                 }
             })
         }
@@ -69,9 +71,20 @@ const game = (() => {
         [3, 4, 5],
         [6, 7, 8]
     ]
+
 // create function that checks if game has been won
     const checkWin = () => {
-
+// check if the positions defined in the winconditions array all have the same value in the main array
+        for ( i=0; i<winConditions.length; i++ ){
+            winConditionSelector = winConditions[i]
+            console.log(winConditionSelector);
+            if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'x' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'x' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'x' || gameBoard.gameBoardArray[winConditionSelector[0]] === 'o' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'o' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'o'){
+                let gameOver = document.createElement('div')
+                let main = document.querySelector('main')
+                gameOver.textContent = 'Game over'
+                main.appendChild(gameOver)
+            }
+        }
     }
 
     addListeners()
@@ -79,7 +92,7 @@ const game = (() => {
         cells,
         cellsArray,
         currentPlayer,
-        checkGameEnd,
+        checkWin,
         winConditions,
     }
 })();

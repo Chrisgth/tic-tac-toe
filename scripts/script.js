@@ -40,6 +40,7 @@ const game = (() => {
     let currentPlayer = playerOne
     const cells = document.querySelectorAll('.cell')
     const cellsArray = Array.from(cells)
+    let filledSquares = 0;
     const addListeners = () => {
         for (i=0; i<cells.length; i++){
             let currentCell = cellsArray[i]
@@ -50,11 +51,13 @@ const game = (() => {
                     currentCell.textContent = 'x'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'x'
                     currentPlayer = playerTwo
+                    filledSquares++
                     game.checkWin()
                 } else {
                     currentCell.textContent = 'o'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'o'
                     currentPlayer = playerOne
+                    filledSquares++
                     game.checkWin()
                 }
             })
@@ -83,7 +86,13 @@ const game = (() => {
                 let main = document.querySelector('main')
                 gameOver.textContent = 'Game over'
                 main.appendChild(gameOver)
-            }
+            } 
+        }
+        if (filledSquares === 9){
+                let gameOver = document.createElement('div')
+                let main = document.querySelector('main')
+                gameOver.textContent = 'Tie'
+                main.appendChild(gameOver)               
         }
     }
 

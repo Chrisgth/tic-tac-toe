@@ -35,8 +35,8 @@ render.display();
 // build the functions that allow players to add marks
 // to a specific spot on the board
 const game = (() => {
-    const playerOne = playerFactory('Bob', 'x')
-    const playerTwo = playerFactory('Bill', 'o')
+    const playerOne = playerFactory('Bob', 'X')
+    const playerTwo = playerFactory('Bill', 'O')
     let currentPlayer = playerOne
     const cells = document.querySelectorAll('.cell')
     const cellsArray = Array.from(cells)
@@ -44,18 +44,19 @@ const game = (() => {
     const addListeners = () => {
         for (i=0; i<cells.length; i++){
             let currentCell = cellsArray[i]
+
             cells[i].addEventListener('click', () => {
-                if (currentCell.textContent != ''){
+                if (currentCell.textContent != '') {
                     return;
-                } else if (currentPlayer.playerSign === 'x') {
-                    currentCell.textContent = 'x'
-                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'x'
+                } else if (currentPlayer.playerSign === 'X') {
+                    currentCell.textContent = 'X'
+                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'X'
                     currentPlayer = playerTwo
                     filledSquares++
                     game.checkWin()
                 } else {
-                    currentCell.textContent = 'o'
-                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'o'
+                    currentCell.textContent = 'O'
+                    gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'O'
                     currentPlayer = playerOne
                     filledSquares++
                     game.checkWin()
@@ -81,7 +82,7 @@ const game = (() => {
         for ( i=0; i<winConditions.length; i++ ){
             winConditionSelector = winConditions[i]
             console.log(winConditionSelector);
-            if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'x' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'x' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'x' || gameBoard.gameBoardArray[winConditionSelector[0]] === 'o' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'o' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'o'){
+            if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'X' || gameBoard.gameBoardArray[winConditionSelector[0]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'O'){
                 let gameOver = document.createElement('div')
                 let main = document.querySelector('main')
                 gameOver.textContent = 'Game over'

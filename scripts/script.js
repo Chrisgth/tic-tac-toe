@@ -53,13 +53,13 @@ const game = (() => {
                     currentCell.textContent = 'X'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'X'
                     game.currentPlayer = game.playerTwo
-                    filledSquares++
+                    game.filledSquares++
                     game.checkWin()
                 } else {
                     currentCell.textContent = 'O'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'O'
                     game.currentPlayer = game.playerOne
-                    filledSquares++
+                    game.filledSquares++
                     game.checkWin()
                 }
             })
@@ -80,24 +80,34 @@ const game = (() => {
 // create function that checks if game has been won
     const checkWin = () => {
 // check if the positions defined in the winconditions array all have the same value in the main array
+        let isWon = false
         for ( i=0; i<winConditions.length; i++ ){
             winConditionSelector = winConditions[i]
-            if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'X' || gameBoard.gameBoardArray[winConditionSelector[0]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'O'){
-                console.log('Game Over')
+            if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'X'){
+                console.log('Game Over for O')
+                isWon = true
                 for ( i=0; i<cells.length; i++ ) {
                     cells[i].classList.remove('active')
                 }
-            } 
+            } else if (gameBoard.gameBoardArray[winConditionSelector[0]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'O') {
+                console.log('Game Over for X')
+                for ( i=0; i<cells.length; i++ ) {
+                    cells[i].classList.remove('active')
+                }
+                isWon = true
+            }
         }
-        if (filledSquares === 9){
+        if (game.filledSquares === 9 && isWon === false){
             console.log('Tie')
             for ( i=0; i<cells.length; i++ ) {
                 cells[i].classList.remove('active')
             }
         }
+        isWon = false
     }
     const startGame = document.getElementById('startGame')
     startGame.addEventListener('click', () => {
+        game.filledSquares = 0
         const formData = document.getElementById('playerNames')
         const requiredFields = document.getElementById('required')
         for ( i=0; i<formData.length-1; i++ ) {
@@ -138,5 +148,6 @@ const game = (() => {
         checkWin,
         winConditions,
         currentPlayerDiv,
+        filledSquares,
     }
 })();

@@ -35,9 +35,10 @@ render.display();
 // build the functions that allow players to add marks
 // to a specific spot on the board
 const game = (() => {
-    const playerOne = playerFactory('Bob', 'X')
-    const playerTwo = playerFactory('Bill', 'O')
-    let currentPlayer = playerOne
+    let playerOne
+    let playerTwo
+    let currentPlayer
+    const currentPlayerDiv = document.querySelector('.currentPlayer')
     const cells = document.querySelectorAll('.cell')
     const cellsArray = Array.from(cells)
     let filledSquares = 0;
@@ -48,16 +49,16 @@ const game = (() => {
             cells[i].addEventListener('click', () => {
                 if (currentCell.textContent != '') {
                     return;
-                } else if (currentPlayer.playerSign === 'X') {
+                } else if (game.currentPlayer.playerSign === 'X') {
                     currentCell.textContent = 'X'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'X'
-                    currentPlayer = playerTwo
+                    game.currentPlayer = game.playerTwo
                     filledSquares++
                     game.checkWin()
                 } else {
                     currentCell.textContent = 'O'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'O'
-                    currentPlayer = playerOne
+                    game.currentPlayer = game.playerOne
                     filledSquares++
                     game.checkWin()
                 }
@@ -81,28 +82,61 @@ const game = (() => {
 // check if the positions defined in the winconditions array all have the same value in the main array
         for ( i=0; i<winConditions.length; i++ ){
             winConditionSelector = winConditions[i]
-            console.log(winConditionSelector);
             if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'X' || gameBoard.gameBoardArray[winConditionSelector[0]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'O'){
-                let gameOver = document.createElement('div')
-                let main = document.querySelector('main')
-                gameOver.textContent = 'Game over'
-                main.appendChild(gameOver)
+                console.log('Game Over')
+                for ( i=0; i<cells.length; i++ ) {
+                    cells[i].classList.remove('active')
+                }
             } 
         }
         if (filledSquares === 9){
-                let gameOver = document.createElement('div')
-                let main = document.querySelector('main')
-                gameOver.textContent = 'Tie'
-                main.appendChild(gameOver)               
+            console.log('Tie')
+            for ( i=0; i<cells.length; i++ ) {
+                cells[i].classList.remove('active')
+            }
         }
     }
-
+    const startGame = document.getElementById('startGame')
+    startGame.addEventListener('click', () => {
+        const formData = document.getElementById('playerNames')
+        const requiredFields = document.getElementById('required')
+        for ( i=0; i<formData.length-1; i++ ) {
+            if (formData[i].value === '') {
+                requiredFields.textContent = '*Please fill out the fields'
+                return
+            }
+        }
+        for ( i=0; i<cells.length; i++) {
+            let currentCell = cellsArray[i]
+            cellsArray[i].textContent = ''
+            gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = ''
+        }
+        const playerOneName = formData[0].value
+        const playerTwoName = formData[1].value
+        game.playerOne = playerFactory(playerOneName, 'X')
+        game.playerTwo = playerFactory(playerTwoName, 'O')
+        game.currentPlayer = game.playerOne
+        const playerOneDiv = document.querySelector('.playerOneName')
+        const playerTwoDiv = document.querySelector('.playerTwoName')
+        playerOneDiv.textContent = `Playing as X: ${game.playerOne.playerName}`
+        playerTwoDiv.textContent = `Playing as O: ${game.playerTwo.playerName}`
+        console.log(game.playerOne)
+        console.log(game.playerTwo)
+        requiredFields.textContent = ''
+        currentPlayerDiv.textContent = `${game.currentPlayer.playerName}'s turn`
+        for ( i=0; i<cells.length; i++ ) {
+            cells[i].classList.add('active')
+        }
+    })
     addListeners()
     return {
         cells,
         cellsArray,
         currentPlayer,
+        playerOne,
+        playerTwo,
         checkWin,
         winConditions,
+        currentPlayerDiv,
     }
 })();

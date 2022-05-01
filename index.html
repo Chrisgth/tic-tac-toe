@@ -12,10 +12,30 @@
     <header>
         <h1>Tic-Tac-Toe!</h1>
     </header>
+    <div class="form">
+        <form action="/" method="get" id="playerNames">
+            <div>
+                <label for="playerOne">*Playing as X:</label>
+                <input type="text" id="playerOne" name="playerTwo" required>
+            </div>
+            <div>
+                <label for="playerTwo">*Playing as O:</label>
+                <input type="text" id="playerTwo" name="playerTwo" required>
+            </div>
+            <button type="button" id="startGame">Start Game</button>
+        </form>
+        <div id="required"></div>
+    </div>
     <main>
-        <div class="board">
-
+        <div class="playerNames">
+            <div class="playerOneName"></div>
+            <div class="playerTwoName"></div>
         </div>
+        <div class="currentPlayer"></div>
+        <div class="board">
+        </div>
+        <h2 class="winner">
+        </h2>
     </main>
 </body>
 </html>

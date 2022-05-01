@@ -12,6 +12,7 @@ body {
     height: 100%;
     margin: 0;
 }
+
 h1 {
     color: white;
 }
@@ -26,10 +27,53 @@ h1 {
 .cell {
     border: 1px solid black;
     border-radius: 10px;
-    background-color: white;
+    background-color: gray;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 5rem;
+    pointer-events: none;
+}
+.cell.active {
+    background-color: white;
+    pointer-events: all;
+}
+form {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+.playerNames {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 1rem;
+}
+input {
+    width: 120px;
+}
+#required {
+    height: 1rem;
+    color: red;
+    text-align: center;
+}
+form > div {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+.currentPlayer {
+    height: 1rem;
+    color: white;
+}
+.winner {
+    color: white;
+    height: 3em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

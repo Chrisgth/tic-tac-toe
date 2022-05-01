@@ -55,12 +55,14 @@ const game = (() => {
                     game.currentPlayer = game.playerTwo
                     game.filledSquares++
                     game.checkWin()
+                    currentPlayerDiv.textContent = `${game.playerTwo.playerName}'s turn`
                 } else {
                     currentCell.textContent = 'O'
                     gameBoard.gameBoardArray[cellsArray.indexOf(currentCell)] = 'O'
                     game.currentPlayer = game.playerOne
                     game.filledSquares++
                     game.checkWin()
+                    currentPlayerDiv.textContent = `${game.playerOne.playerName}'s turn`
                 }
             })
         }
@@ -78,6 +80,7 @@ const game = (() => {
     ]
 
 // create function that checks if game has been won
+    const winner = document.querySelector('.winner')
     const checkWin = () => {
 // check if the positions defined in the winconditions array all have the same value in the main array
         let isWon = false
@@ -85,12 +88,14 @@ const game = (() => {
             winConditionSelector = winConditions[i]
             if(gameBoard.gameBoardArray[winConditionSelector[0]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'X' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'X'){
                 console.log('Game Over for O')
+                winner.textContent = `The winner is ${game.playerOne.playerName}!`
                 isWon = true
                 for ( i=0; i<cells.length; i++ ) {
                     cells[i].classList.remove('active')
                 }
             } else if (gameBoard.gameBoardArray[winConditionSelector[0]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[1]] === 'O' && gameBoard.gameBoardArray[winConditionSelector[2]] === 'O') {
                 console.log('Game Over for X')
+                winner.textContent = `The winner is ${game.playerTwo.playerName}!`
                 for ( i=0; i<cells.length; i++ ) {
                     cells[i].classList.remove('active')
                 }
@@ -99,6 +104,7 @@ const game = (() => {
         }
         if (game.filledSquares === 9 && isWon === false){
             console.log('Tie')
+            winner.textContent = `It's a Tie!`
             for ( i=0; i<cells.length; i++ ) {
                 cells[i].classList.remove('active')
             }
@@ -107,6 +113,7 @@ const game = (() => {
     }
     const startGame = document.getElementById('startGame')
     startGame.addEventListener('click', () => {
+        winner.textContent = ''
         game.filledSquares = 0
         const formData = document.getElementById('playerNames')
         const requiredFields = document.getElementById('required')
